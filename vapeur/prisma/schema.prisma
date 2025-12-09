@@ -14,7 +14,26 @@ datasource db {
 }
 
 model jeux{
-  id int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   nom String
   description String
+  date_sortie DateTime
+  mis_en_avant Boolean @default(false)
+
+  editeurs editeur[]
+  genres genre[]
+}
+
+model editeur{
+  id Int @id @default(autoincrement())
+  nom String
+
+  jeuxs jeux[]
+}
+
+model genre{
+  id Int @id @default(autoincrement())
+  nom String
+
+  jeuxs jeux[]
 }
