@@ -13,8 +13,26 @@ datasource db {
   url      = "file:./database.db"
 }
 
-model jeux{
+model jeu{
   id Int @id @default(autoincrement())
   nom String
   description String
+  date String
+  misEnAvant Boolean
+  Editeur Editeur @relation(fields: [editeurId], references: [id])
+  editeurId Int
+  Genre Genre @relation(fields: [genreId], references: [id])
+  genreId Int
 }
+
+model Editeur{
+  id Int @id @default(autoincrement())
+  nom String
+  jeux jeu[]
+}
+
+model Genre{
+  id Int @id @default(autoincrement())
+  nom String
+  jeux jeu[]
+} 
