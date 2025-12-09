@@ -1,0 +1,7 @@
+// modifier un éditeur
+<h1>Modifier l'éditeur</h1>
+<form action="/editeurs/{{editeur.id}}?_method=PUT" method="POST">
+    <label for="nom">Nom de l'éditeur :</label>
+    <input type="text" id="nom" name="nom" value="{{editeur.nom}}" required>
+    <button type="submit">Enregistrer les modifications</button>
+</form>

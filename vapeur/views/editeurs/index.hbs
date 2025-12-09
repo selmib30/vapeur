@@ -1,0 +1,8 @@
+// page index des éditeurs, par ordre alphabétique
+
+<h1>Liste des éditeurs</h1>
+<ul>
+    {{#each editeurs}}
+        <li><a href="/editeurs/{{this.id}}">{{this.nom}}</a></li>
+    {{/each}}
+</ul>
