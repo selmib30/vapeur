@@ -13,6 +13,7 @@ app.set("views", path.join(__dirname, "views")); // On définit le dossier des v
 hbs.registerPartials(path.join(__dirname, "views", "partials"));
 app.use(bodyParser.urlencoded())
 
+
 hbs.registerHelper("formatDate", (date) => {
     return date.toLocaleDateString();
 });
@@ -30,4 +31,9 @@ app.get("/", async (req, res) => {
     // Le chemin est relatif au dossier views.
     // On peut aller chercher des templates dans les sous-dossiers (e.g. movies/details).
     console.log("bonjour");
+});
+
+app.get("/genres", async (req, res) => {
+  const genres = await prisma.genre.findMany();
+  res.render("genres/index", { genres });
 });
