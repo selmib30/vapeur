@@ -10,30 +10,34 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./database.db"
+  url      = env("DATABASE_URL")
+
 }
 
-model jeux{
-  id Int @id @default(autoincrement())
-  nom String
+model Jeu{
+  Jeu_id Int @id @default(autoincrement())
+  Jeu_nom String
   description String
   date_sortie DateTime
   mis_en_avant Boolean @default(false)
 
-  editeurs editeur[]
-  genres genre[]
+  genreId     Int
+  genre       Genre    @relation(fields: [genreId], references: [Genre_id])
+
+  editeurId   Int
+  editeur     Editeur  @relation(fields: [editeurId], references: [Editeur_id])
 }
 
-model editeur{
-  id Int @id @default(autoincrement())
-  nom String
+model Editeur{
+  Editeur_id Int @id @default(autoincrement())
+  Editeur_nom String
 
-  jeuxs jeux[]
+  jeux Jeu[]
 }
 
-model genre{
-  id Int @id @default(autoincrement())
-  nom String
+model Genre{
+  Genre_id Int @id @default(autoincrement())
+  Genre_nom String
 
-  jeuxs jeux[]
+  jeux Jeu[]
 }
