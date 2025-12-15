@@ -1,5 +1,3 @@
-// Fichier : app.js (Version mise à jour)
-
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
@@ -10,7 +8,9 @@ const hbs = require("hbs");
 const app = express();
 const port = 8000;
 
+
 const editeursRouter = require('./routes/editeurs');
+app.use('/editeurs', editeursRouter);
 
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));

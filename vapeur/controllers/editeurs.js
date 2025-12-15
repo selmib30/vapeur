@@ -1,5 +1,3 @@
-// Fichier : controllers/editeurs.js (Version corrigée pour votre modèle)
-
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 

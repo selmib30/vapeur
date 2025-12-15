@@ -6,9 +6,8 @@
         {{#each editeurs}}
             <li>
                 <a href="/editeurs/{{this.Editeur_id}}">
-                    {{this.Editeur_nom}}
-                </a> 
-                - 
+                    {{this.Editeur_nom}} 
+                </a>
                 <form action="/editeurs/{{this.Editeur_id}}/modification" method="GET" style="display: inline;">
                     <button type="submit">Modifier</button>
                 </form>
