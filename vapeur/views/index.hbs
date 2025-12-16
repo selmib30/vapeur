@@ -1,15 +1,15 @@
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/css/global.css" />
-    </head>
-    <body>
-        {{{ body }}}
-    </body>
-</html>
+<h1>Jeux mis en avant</h1>
 
-<h1>Bienvenue sur notre site</h1>
-<div>
-    <a href="/movies">Voir les films</a>
-</div>
+{{#if jeux.length}}
+  <div class="games-grid">
+    {{#each jeux}}
+      <div class="game-card">
+        <h3>{{this.nom}}</h3>
+        <p><strong>Éditeur :</strong> {{this.editeur}}</p>
+        <p><strong>Genre :</strong> {{this.genre}}</p>
+      </div>
+    {{/each}}
+  </div>
+{{else}}
+  <p>Aucun jeu mis en avant pour le moment.</p>
+{{/if}}
