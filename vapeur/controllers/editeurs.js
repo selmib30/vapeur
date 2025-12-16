@@ -1,15 +1,31 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const express = require('express');
+const app = express.Router();
 
-module.exports = {
-    listeEditeurs,
-    getEditeurById,
-    getCreateEditeur,
-    postCreateEditeur,
-    getEditEditeur,
-    postEditEditeur,
-    postDeleteEditeur
-};
+// GET /editeurs/creation - Affiche le formulaire
+app.get('/creation', getCreateEditeur); 
+
+// POST /editeurs/creation - Traite la création
+app.post('/creation', postCreateEditeur); 
+
+// GET /editeurs - Liste tous les éditeurs
+app.get('/', listeEditeurs); 
+
+// GET /editeurs/:id/modification - Affiche le formulaire
+app.get('/:id/modification', getEditEditeur); 
+
+// POST /editeurs/:id/modification - Traite la modification
+app.post('/:id/modification', postEditEditeur); 
+
+// POST /editeurs/:id/suppression - Traite la suppression
+app.post('/:id/suppression', postDeleteEditeur); 
+
+// GET /editeurs/:id - Affiche les jeux de l'éditeur (Détail)
+app.get('/:id', getEditeurById);
+
+
+
 
 // GET /editeurs - Affiche la liste des éditeurs
 async function listeEditeurs(req, res) { 
@@ -30,18 +46,13 @@ async function listeEditeurs(req, res) {
 }
 
 
-// GET /editeurs/:id - Affiche les jeux d'un éditeur spécifique
+//GET /editeurs/:id - Affiche les jeux d'un éditeur spécifique
 async function getEditeurById(req, res) {
-    const editeurId = parseInt(req.params.id);
+    const editeurId = parseInt(req.params.id); 
     try {
         const editeur = await prisma.editeur.findUnique({
             where: { Editeur_id: editeurId }, 
-            include: { 
-                jeux: {
-                    orderBy: { titre: 'asc' }, 
-                    include: { genre: true, editeur: true } 
-                } 
-            },
+            include: { jeux: true } 
         });
 
         if (!editeur) {
@@ -51,7 +62,6 @@ async function getEditeurById(req, res) {
         res.render("editeurs/jeux", {
             editeur: editeur,
             jeux: editeur.jeux,
-            titre: `Jeux publiés par ${editeur.Editeur_nom}` 
         });
     }
     catch (error) {
@@ -61,6 +71,7 @@ async function getEditeurById(req, res) {
 }
 
 // GET /editeurs/creation - Affiche le formulaire de création
+
 async function getCreateEditeur(req, res) { 
     res.render("editeurs/formulaire", { 
         titre: "Créer un nouvel éditeur",
@@ -69,9 +80,10 @@ async function getCreateEditeur(req, res) {
     });
 }
 
-// POST /editeurs/creation - Traite la création de l'éditeur
+//POST /editeurs/creation - Traite la création de l'éditeur
 async function postCreateEditeur(req, res) { 
-    const { nom } = req.body; 
+    console.log("Corps de la requête:", req.body); 
+    const { nom } = req.body;
     try {
         await prisma.editeur.create({
             data: { Editeur_nom: nom } 
@@ -80,7 +92,7 @@ async function postCreateEditeur(req, res) {
     } catch (error) {
         console.error("Erreur lors de la création de l'éditeur:", error);
         
-        let messageErreur = "Erreur lors de la création de l'éditeur.";
+        let messageErreur = "Erreur lors de la création de l'éditeur. Veuillez vérifier les données.";
 
         res.render("editeurs/formulaire", {
             titre: "Créer un nouvel éditeur",
@@ -92,7 +104,7 @@ async function postCreateEditeur(req, res) {
 }
 
 
-// GET /editeurs/:id/modification - Affiche le formulaire de modification
+//GET /editeurs/:id/modification - Affiche le formulaire de modification
 async function getEditEditeur(req, res) {
     const editeurId = parseInt(req.params.id);
     try {
@@ -116,7 +128,7 @@ async function getEditEditeur(req, res) {
     }
 }
 
-// POST /editeurs/:id/modification - Traite la modification de l'éditeur
+//POST /editeurs/:id/modification - Traite la modification de l'éditeur
 async function postEditEditeur(req, res) { 
     const editeurId = parseInt(req.params.id);
     const { nom } = req.body;
@@ -129,9 +141,10 @@ async function postEditEditeur(req, res) {
     } catch (error) {
         console.error("Erreur lors de la modification de l'éditeur:", error);
         
-        let messageErreur = "Erreur lors de la modification de l'éditeur.";
+        let messageErreur = "Erreur lors de la modification de l'éditeur. Le nom existe peut-être déjà.";
         
         res.render("editeurs/formulaire", {
+            // Repasse les données modifiées pour ne pas perdre la saisie
             editeur: { Editeur_id: editeurId, Editeur_nom: nom }, 
             titre: `Modifier l'éditeur`,
             action: `/editeurs/${editeurId}/modification`,
@@ -140,7 +153,7 @@ async function postEditEditeur(req, res) {
     }
 }
 
-// POST /editeurs/:id/suppression - Traite la suppression de l'éditeur
+//POST /editeurs/:id/suppression - Traite la suppression de l'éditeur
 async function postDeleteEditeur(req, res) { 
     const editeurId = parseInt(req.params.id);
     try {
@@ -151,6 +164,10 @@ async function postDeleteEditeur(req, res) {
     }
     catch (error) {
         console.error("Erreur lors de la suppression de l'éditeur:", error);
-        let messageErreur = "Erreur lors de la suppression.";
+        // CORRECTION : Gestion de l'erreur, notamment les erreurs de contrainte (éditeur lié à des jeux)
+        let messageErreur = "Erreur lors de la suppression. Il est probable que cet éditeur soit encore lié à un ou plusieurs jeux.";
+        res.redirect(`/editeurs?erreur=${encodeURIComponent(messageErreur)}`);
     }
 }
+
+module.exports = app;

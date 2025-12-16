@@ -9,13 +9,13 @@
         <h2>Liste des Jeux (Triés par titre)</h2>
         <ul class="list-group">
             {{#each jeux}}
-                <li class="list-group-item">
-                    <a href="/jeux/{{this.Jeu_id}}">
-                        {{this.titre}} 
-                    </a>
-                    (Genre : {{this.genre.nom}})
-                </li>
-            {{/each}}
+            <li class="list-group-item">
+                <a href="/jeux/{{this.Jeu_id}}">
+                    {{this.Jeu_nom}} 
+                </a>
+            (Genre : **{{this.genre.Genre_nom}}**) 
+</li>
+{{/each}}
         </ul>
     {{else}}
         <p>
