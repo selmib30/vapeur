@@ -15,7 +15,6 @@ app.set("views", path.join(__dirname, "views")); // On définit le dossier des v
 hbs.registerPartials(path.join(__dirname, "views", "partials"));
  // On définit le dossier des partials (composants e.g. header, footer, menu...)
 
-<<<<<<< Updated upstream
 app.use('/editeurs', editeursRouter);
 
 const jeuxRouter = require('./controllers/gestionsJeu');
