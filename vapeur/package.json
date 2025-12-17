@@ -7,8 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
 
 
-    "seed:genres": "node genreSeeder.js"
-    "game:"
+  
 
 
     "seed:genres": "node genreSeeder.js",

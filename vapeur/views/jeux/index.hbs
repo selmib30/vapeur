@@ -9,6 +9,7 @@
             <th>Description</th>
             <th>Genre</th>
             <th>Éditeur</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -18,10 +19,18 @@
                 <td>{{this.description}}</td>
                 <td>{{this.Genre.nom}}</td>
                 <td>{{this.Editeur.nom}}</td>
+                <td>
+                    <a href="/jeux/modifier/{{this.Jeu_id}}" style="margin-right:6px;">
+                        <button type="button">Modifier</button>
+                    </a>
+                    <form method="POST" action="/jeux/supprimer/{{this.Jeu_id}}" onsubmit="return confirm('Confirmer la suppression ?');" style="display:inline">
+                        <button type="submit">Supprimer</button>
+                    </form>
+                </td>
             </tr>
         {{else}}
             <tr>
-                <td colspan="4" style="color: blue;">
+                <td colspan="5" style="color: blue;">
                     Aucun jeu enregistré pour le moment.
                 </td>
             </tr>
@@ -31,5 +40,8 @@
 
 
 <br>
+<br>
+<a href="/jeux/form"><button>Ajouter un jeu</button></a>
+
 <a href="/">Retour à l'accueil</a>
 
