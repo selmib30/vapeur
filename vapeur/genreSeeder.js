@@ -1,14 +1,14 @@
 const defaultGenres = [
   'Action',
   'Aventure',
-  'Comédie',
-  'Drame',
-  'Fantasy',
+  'Jeu de Plateforme',
+  'J-RPG',
+  'Sport',
   'Horreur',
-  'Romance',
-  'Science-Fiction',
-  'Thriller',
-  'Animation',
+  'RPG',
+  'Monde Ouvert',
+  'Wargame',
+  'Survival',
 ];
 
 async function seedGenres(prisma) {
