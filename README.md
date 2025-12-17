@@ -15,7 +15,7 @@ Environnent à configurée pour lancer le projet:
 7) npx prisma generate
 8) npm run start
 
-Index principal :Clément
+0.Index principal :Clément
 1. mise en place du serveur /initialisation du serveur : Selim
 2. BDD/architecture du projet : selim, Matthieu
 3. Gestions Editeurs / Jeux / genre : selim, Matthieu, Alizée
