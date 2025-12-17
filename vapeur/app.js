@@ -5,7 +5,10 @@ const bodyParser = require("body-parser")
 const path = require('path');
 const hbs = require("hbs");
 const { seedGenres } = require('./GenreSeeder');
+const jeuxRouter = require('./controllers/gestionsJeu');
 const editeursRouter = require('./controllers/editeurs');
+const indexRouter = require('./routes/index');
+const jeuxRouter = require('./routes/jeux'); 
 const app = express();
 const port = 8000;
 
@@ -14,32 +17,27 @@ app.set("view engine", "hbs"); // On définit le moteur de template que Express 
 app.set("views", path.join(__dirname, "views")); // On définit le dossier des vues (dans lequel se trouvent les fichiers .hbs)
 hbs.registerPartials(path.join(__dirname, "views", "partials"));
  // On définit le dossier des partials (composants e.g. header, footer, menu...)
-
+app.use('/jeux', jeuxRouter);
 app.use('/editeurs', editeursRouter);
 
-const jeuxRouter = require('./controllers/gestionsJeu');
-app.use('/jeux', jeuxRouter);
-=======
 
-// --- 1. IMPORTATION DES ROUTES ---
-const indexRouter = require('./routes/index'); // <--- On importe ton fichier index.js
-const jeuxRouter = require('./routes/jeux');   // <--- On importe ton fichier jeux.js
 
 
 hbs.registerHelper("formatDate", (date) => {
     return date.toLocaleDateString();
 });
->>>>>>> Stashed changes
 
 // --- 2. BRANCHEMENT DES ROUTES ---
 app.use('/', indexRouter);      // Gère la page d'accueil (Jeux mis en avant)
 app.use('/jeux', jeuxRouter);   // Gère la liste des jeux (/jeux)
 
+const jeuxRouter = require('./controllers/gestionsJeu');
+app.use('/jeux', jeuxRouter);
+
 (async () => {
   await seedGenres(prisma);
   
   app.listen(port, () => {
-<<<<<<< Updated upstream
     console.log(`Serveur démarré sur le port ${port}`);
   });
 })();
@@ -90,20 +88,3 @@ app.get('/genres/:id', async (req, res) => {
     res.status(500).send('Erreur serveur');
   }
 });
-=======
-    console.log(`Serveur démarré sur http://localhost:${port}`);
-    console.log(`Test l'accueil ici : http://localhost:${port}`);
-    console.log(`Test les jeux ici    : http://localhost:${port}/jeux`);
-  });
-})();
-
-app.get("/", async (req, res) => {
-    // on passe seulement le nom du fichier .hbs sans l'extention.
-    // Le chemin est relatif au dossier views.
-    // On peut aller chercher des templates dans les sous-dossiers (e.g. movies/details).
-    console.log("bonjour");
-    res.render("app", { title: "Accueil - Vapeur" });
-});
-
-module.exports = app;
->>>>>>> Stashed changes
