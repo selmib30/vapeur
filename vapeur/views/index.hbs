@@ -1,3 +1,4 @@
+
 <h1>{{title}}</h1>
 <p>Voici la liste complète de tous les jeux enregistrés.</p>
 
@@ -33,3 +34,19 @@
 <br>
 <a href="/">Retour à l'accueil</a>
 
+
+<h1>Jeux mis en avant</h1>
+
+{{#if jeux.length}}
+  <div class="games-grid">
+    {{#each jeux}}
+      <div class="game-card">
+        <h3>{{this.nom}}</h3>
+        <p><strong>Éditeur :</strong> {{this.editeur}}</p>
+        <p><strong>Genre :</strong> {{this.genre}}</p>
+      </div>
+    {{/each}}
+  </div>
+{{else}}
+  <p>Aucun jeu mis en avant pour le moment.</p>
+{{/if}}

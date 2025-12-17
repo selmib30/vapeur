@@ -5,8 +5,18 @@
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+
+
     "seed:genres": "node genreSeeder.js"
     "game:"
+
+
+    "seed:genres": "node genreSeeder.js",
+    "dev": "nodemon app.js",
+    "start": "node server.js",
+    "editeur": "node editeurs.js"
+ 
+  
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +25,8 @@
     "express": "^5.2.1",
     "hbs": "^4.2.0",
     "node.js": "^0.0.1-security",
-    "prisma": "6.19.0"
+    "nodemon": "^3.1.11",
+    "prisma": "^6.19.0",
+    "sqlite3": "^5.1.7"
   }
 }
