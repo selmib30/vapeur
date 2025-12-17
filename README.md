@@ -24,4 +24,3 @@ squelette du projet layout : clément
 
 
 
-
