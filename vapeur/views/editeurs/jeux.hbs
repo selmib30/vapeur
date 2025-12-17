@@ -1,0 +1,28 @@
+<div>
+    <h1>Jeux publiés par {{editeur.Editeur_nom}}</h1>
+    
+    <p>
+        <a href="/editeurs">Retour à la liste des éditeurs</a>
+    </p>
+
+    {{#if jeux}}
+        <h2>Liste des Jeux (Triés par titre)</h2>
+        <ul class="list-group">
+            {{#each jeux}}
+            <li class="list-group-item">
+                <a href="/jeux/{{this.Jeu_id}}">
+                    {{this.Jeu_nom}} 
+                </a>
+            </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>
+            Cet éditeur ({{editeur.Editeur_nom}}) n'a pas encore publié de jeux.
+        </p>
+    {{/if}}
+    
+    <div class=>
+        <a href="/editeurs/{{editeur.Editeur_id}}/modification" class="btn btn-warning">Modifier l'éditeur</a>
+    </div>
+</div>
