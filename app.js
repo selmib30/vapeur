@@ -11,6 +11,8 @@ const app = express();
 const port = 8000;
 
 app.use(express.urlencoded({ extended: true }));
+// Serve public assets (CSS, images, JS)
+app.use(express.static(path.join(__dirname, 'public')));
 app.set("view engine", "hbs"); // On définit le moteur de template que Express va utiliser
 app.set("views", path.join(__dirname, "views")); // On définit le dossier des vues (dans lequel se trouvent les fichiers .hbs)
 hbs.registerPartials(path.join(__dirname, "views", "partials"));
@@ -32,9 +34,25 @@ hbs.registerHelper("formatDate", (date) => {
   });
 })();
 
-app.get('/', (req, res) => {
-    //pour le moment editeurs est la page d'accueil
-    res.redirect('/index');
+app.get('/', async (req, res) => {
+  try {
+    const jeuxRaw = await prisma.jeu.findMany({
+      where: { mis_en_avant: true },
+      include: { editeur: true, genres: true },
+      orderBy: { Jeu_nom: 'asc' }
+    });
+
+    const jeux = jeuxRaw.map(j => ({
+      nom: j.Jeu_nom,
+      editeur: j.editeur ? j.editeur.Editeur_nom : '',
+      genre: j.genres && j.genres.length ? j.genres.map(g => g.Genre_nom).join(', ') : ''
+    }));
+
+    res.render('index', { layout: 'layout', jeux });
+  } catch (e) {
+    console.error('Erreur chargement page d\'accueil:', e);
+    res.status(500).send('Erreur serveur');
+  }
 });
 
 app.use((err, req, res, next) => {
@@ -46,13 +64,30 @@ app.use((err, req, res, next) => {
 });
 
 // route /index  hbs
-app.get('/index', (req, res) => {
-    res.render('index');
+app.get('/index', async (req, res) => {
+  try {
+    const jeuxRaw = await prisma.jeu.findMany({
+      where: { mis_en_avant: true },
+      include: { editeur: true, genres: true },
+      orderBy: { Jeu_nom: 'asc' }
+    });
+
+    const jeux = jeuxRaw.map(j => ({
+      nom: j.Jeu_nom,
+      editeur: j.editeur ? j.editeur.Editeur_nom : '',
+      genre: j.genres && j.genres.length ? j.genres.map(g => g.Genre_nom).join(', ') : ''
+    }));
+
+    res.render('index', { layout: 'layout', jeux });
+  } catch (e) {
+    console.error('Erreur chargement page d\'accueil:', e);
+    res.status(500).send('Erreur serveur');
+  }
 });
 
 app.get('/genres', async (req, res) => {
-        const genres = await prisma.genre.findMany();
-        res.render('genres/index', { genres });
+  const genres = await prisma.genre.findMany();
+  res.render('genres/index', { layout: 'layout', genres });
 });
 
 // Détail d'un genre
@@ -72,7 +107,7 @@ app.get('/genres/:id', async (req, res) => {
       return res.status(404).send('Genre non trouvé');
     }
 
-    res.render('genres/show', { genre, jeux: genre.jeux });
+    res.render('genres/show', { layout: 'layout', genre, jeux: genre.jeux });
   } catch (e) {
     console.error('Erreur lors de la récupération du genre:', e);
     res.status(500).send('Erreur serveur');

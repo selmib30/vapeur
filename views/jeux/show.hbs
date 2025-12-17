@@ -1,0 +1,30 @@
+<h1>{{jeu.nom}}</h1>
+
+<div>
+  <p><strong>Description:</strong> {{jeu.description}}</p>
+  <p><strong>Date de sortie:</strong> {{#if jeu.date}}{{formatDate jeu.date}}{{else}}—{{/if}}</p>
+  <p><strong>Mis en avant:</strong> {{#if jeu.misEnAvant}}Oui{{else}}Non{{/if}}</p>
+
+  <p><strong>Genres:</strong>
+    {{#if jeu.genres}}
+      {{#each jeu.genres}}
+        <a href="/genres/{{this.id}}">{{this.nom}}</a>{{#unless @last}}, {{/unless}}
+      {{/each}}
+    {{else}}
+      —
+    {{/if}}
+  </p>
+
+  <p><strong>Éditeur:</strong>
+    {{#if jeu.editeur}}
+      <a href="/editeurs/{{jeu.editeur.id}}">{{jeu.editeur.nom}}</a>
+    {{else}}
+      —
+    {{/if}}
+  </p>
+</div>
+
+<div style="margin-top: 16px;">
+  <a href="/jeux/modifier/{{jeu.Jeu_id}}"><button type="button">Modifier</button></a>
+  <a href="/jeux"><button type="button">Retour à la liste</button></a>
+</div>
