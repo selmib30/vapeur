@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed:genres": "node genreSeeder.js"
+    "game:"
   },
   "author": "",
   "license": "ISC",

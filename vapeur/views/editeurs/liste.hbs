@@ -1,0 +1,22 @@
+<h2>Liste des Éditeurs</h2>
+<p><a href="/editeurs/creation">Ajouter un nouvel éditeur</a></p>
+
+{{#if editeurs}}
+    <ul>
+        {{#each editeurs}}
+            <li>
+                <a href="/editeurs/{{this.Editeur_id}}">
+                    {{this.Editeur_nom}} 
+                </a>
+                <form action="/editeurs/{{this.Editeur_id}}/modification" method="GET" style="display: inline;">
+                    <button type="submit">Modifier</button>
+                </form>
+                <form action="/editeurs/{{this.Editeur_id}}/suppression" method="POST" style="display: inline;">
+                    <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet éditeur ?')">Supprimer</button>
+                </form>
+            </li>
+        {{/each}}
+    </ul>
+{{else}}
+    <p>Aucun éditeur n'est enregistré.</p>
+{{/if}}

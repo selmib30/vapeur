@@ -1,0 +1,64 @@
+
+
+<h1>{{title}}</h1>
+
+
+<form method="post" action="/jeux">
+    <div>
+        <label>Nom:<br>
+            <input type="text" name="nom" required />
+        </label>
+    </div>
+
+
+    <div>
+        <label>Description:<br>
+            <textarea name="description" rows="4" cols="50"></textarea>
+        </label>
+    </div>
+
+
+    <div>
+        <label>Date de sortie:<br>
+            <input type="date" name="date" />
+        </label>
+    </div>
+
+
+    <div>
+        <label>Genre:<br>
+            <select name="genreId" required>
+                {{#each genres}}
+                    <option value="{{this.id}}">{{this.nom}}</option>
+                {{/each}}
+            </select>
+        </label>
+    </div>
+
+
+    <div>
+        <label>Éditeur:<br>
+            <select name="editeurId" required>
+                {{#each editeurs}}
+                    <option value="{{this.id}}">{{this.nom}}</option>
+                {{/each}}
+            </select>
+        </label>
+    </div>
+
+
+    <div>
+        <label>
+            <input type="checkbox" name="misEnAvant" /> Mis en avant
+        </label>
+    </div>
+
+
+    <div>
+        <button type="submit">Ajouter le jeu</button>
+        <a href="/jeux">Annuler</a>
+    </div>
+</form>
+
+
+
