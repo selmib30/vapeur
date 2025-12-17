@@ -3,24 +3,24 @@
 <h1>{{title}}</h1>
 
 
-<form method="post" action="/jeux">
+<form method="post" action="{{#if jeu}}/jeux/modifier/{{jeu.Jeu_id}}{{else}}/jeux/form{{/if}}">
     <div>
         <label>Nom:<br>
-            <input type="text" name="nom" required />
+            <input type="text" name="nom" required value="{{#if jeu}}{{jeu.nom}}{{/if}}" />
         </label>
     </div>
 
 
     <div>
         <label>Description:<br>
-            <textarea name="description" rows="4" cols="50"></textarea>
+            <textarea name="description" rows="4" cols="50">{{#if jeu}}{{jeu.description}}{{/if}}</textarea>
         </label>
     </div>
 
 
     <div>
         <label>Date de sortie:<br>
-            <input type="date" name="date" />
+            <input type="date" name="date" value="{{#if jeu}}{{jeu.date}}{{/if}}" />
         </label>
     </div>
 
@@ -28,8 +28,9 @@
     <div>
         <label>Genre:<br>
             <select name="genreId" required>
+                <option value="">-- Choisir --</option>
                 {{#each genres}}
-                    <option value="{{this.id}}">{{this.nom}}</option>
+                    <option value="{{this.id}}" {{#if this.selected}}selected{{/if}}>{{this.nom}}</option>
                 {{/each}}
             </select>
         </label>
@@ -39,8 +40,9 @@
     <div>
         <label>Éditeur:<br>
             <select name="editeurId" required>
+                <option value="">-- Choisir --</option>
                 {{#each editeurs}}
-                    <option value="{{this.id}}">{{this.nom}}</option>
+                    <option value="{{this.id}}" {{#if this.selected}}selected{{/if}}>{{this.nom}}</option>
                 {{/each}}
             </select>
         </label>
@@ -49,13 +51,13 @@
 
     <div>
         <label>
-            <input type="checkbox" name="misEnAvant" /> Mis en avant
+            <input type="checkbox" name="misEnAvant" {{#if jeu}}{{#if jeu.misEnAvant}}checked{{/if}}{{/if}} /> Mis en avant
         </label>
     </div>
 
 
     <div>
-        <button type="submit">Ajouter le jeu</button>
+        <button type="submit">{{#if jeu}}Enregistrer les modifications{{else}}Ajouter le jeu{{/if}}</button>
         <a href="/jeux">Annuler</a>
     </div>
 </form>
