@@ -11,7 +11,6 @@ const app = express();
 const port = 8000;
 
 app.use(express.urlencoded({ extended: true }));
-// Serve public assets (CSS, images, JS)
 app.use(express.static(path.join(__dirname, 'public')));
 app.set("view engine", "hbs"); // On définit le moteur de template que Express va utiliser
 app.set("views", path.join(__dirname, "views")); // On définit le dossier des vues (dans lequel se trouvent les fichiers .hbs)

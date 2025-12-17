@@ -30,7 +30,7 @@ router.get('/', async (req, res, next) => {
 
 
   } catch (error) {
-    // Si une erreur survient (ex: BDD éteinte), on l'affiche et on passe au gestionnaire d'erreur
+    // Si une erreur survient, on l'affiche et on passe au gestionnaire d'erreur
     console.error("Erreur lors de la récupération des jeux :", error);
     next(error);
   }
