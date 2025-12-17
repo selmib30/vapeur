@@ -6,14 +6,14 @@ cloner le depot git
 cloner le dossier sur son ordinateur
 
 Environnent à configurée pour lancer le projet:
-npm Install prisma@6.19.0
-npm install sqlite3
-npm install express
-rajouter un .env dans /vaper 
-rajouter la base de donnée : DATABASE_URL="file:./database.db"
-npx prisma migrate deploy
-npx prisma generate
-npm run start
+1) npm Install prisma@6.19.0
+2) npm install sqlite3
+3) npm install express
+4) rajouter un .env dans /vaper 
+5) rajouter la base de donnée : DATABASE_URL="file:./database.db"
+6) npx prisma migrate deploy
+7) npx prisma generate
+8) npm run start
 
 Index principal :Clément
 mise en place du serveur /initialisation du serveur : Selim
