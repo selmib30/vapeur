@@ -26,7 +26,7 @@ app.listen(port, () => {
 
 app.get('/', (req, res) => {
     //pour le moment editeurs est la page d'accueil
-    res.redirect('/editeurs');
+    res.redirect('/index');
 });
 
 app.use((err, req, res, next) => {
@@ -35,4 +35,9 @@ app.use((err, req, res, next) => {
 
 app.use((err, req, res, next) => {
     res.status(500).send("Quelque chose s'est mal passé !");
+});
+
+// route /index  hbs
+app.get('/index', (req, res) => {
+    res.render('index');
 });
