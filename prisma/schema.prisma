@@ -21,10 +21,7 @@ model Jeu{
   description String
   date_sortie DateTime
   mis_en_avant Boolean @default(false)
-
-  genreId     Int
-  genre       Genre    @relation(fields: [genreId], references: [Genre_id])
-
+  genres      Genre[]
   editeurId   Int
   editeur     Editeur  @relation(fields: [editeurId], references: [Editeur_id])
 }

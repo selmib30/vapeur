@@ -26,14 +26,13 @@
 
 
     <div>
-        <label>Genre:<br>
-            <select name="genreId" required>
-                <option value="">-- Choisir --</option>
-                {{#each genres}}
-                    <option value="{{this.id}}" {{#if this.selected}}selected{{/if}}>{{this.nom}}</option>
-                {{/each}}
-            </select>
-        </label>
+        <p>Genres (sélection multiple):</p>
+        {{#each genres}}
+            <label style="display:block;">
+                <input type="checkbox" name="genreIds" value="{{this.id}}" {{#if this.selected}}checked{{/if}} />
+                {{this.nom}}
+            </label>
+        {{/each}}
     </div>
 
 

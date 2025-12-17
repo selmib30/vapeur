@@ -10,16 +10,18 @@ app.get('/', listeJeux);
 async function listeJeux(req, res) {
     try {
         const jeuxRaw = await prisma.jeu.findMany({
-            include: { genre: true, editeur: true },
+            include: { genres: true, editeur: true },
             orderBy: { Jeu_nom: 'asc' }
         });
 
-        // Map to the shape expected by the template (nom, description, Genre.nom, Editeur.nom, Jeu_id)
+        // Map to the shape expected by the template
         const jeux = jeuxRaw.map(j => ({
             Jeu_id: j.Jeu_id,
             nom: j.Jeu_nom,
             description: j.description,
-            Genre: j.genre ? { nom: j.genre.Genre_nom } : { nom: '' },
+            genresText: j.genres && j.genres.length
+                ? j.genres.map(g => g.Genre_nom).join(', ')
+                : '',
             Editeur: j.editeur ? { nom: j.editeur.Editeur_nom } : { nom: '' }
         }));
 
@@ -39,7 +41,8 @@ app.get('/modifier/:id', async (req, res) => {
     const jeuId = parseInt(req.params.id);
     try {
         const jeu = await prisma.jeu.findUnique({
-            where: { Jeu_id: jeuId }
+            where: { Jeu_id: jeuId },
+            include: { genres: true }
         });
         if (!jeu) {
             return res.status(404).send("Jeu non trouvé.");
@@ -49,7 +52,8 @@ app.get('/modifier/:id', async (req, res) => {
         const genresRaw = await prisma.genre.findMany({ orderBy: { Genre_nom: 'asc' } });
         const editeursRaw = await prisma.editeur.findMany({ orderBy: { Editeur_nom: 'asc' } });
 
-        const genres = genresRaw.map(g => ({ id: g.Genre_id, nom: g.Genre_nom, selected: g.Genre_id === jeu.genreId }));
+        const selectedGenreIds = new Set((jeu.genres || []).map(g => g.Genre_id));
+        const genres = genresRaw.map(g => ({ id: g.Genre_id, nom: g.Genre_nom, selected: selectedGenreIds.has(g.Genre_id) }));
         const editeurs = editeursRaw.map(e => ({ id: e.Editeur_id, nom: e.Editeur_nom, selected: e.Editeur_id === jeu.editeurId }));
 
         // map jeu to template-friendly fields
@@ -58,7 +62,6 @@ app.get('/modifier/:id', async (req, res) => {
             nom: jeu.Jeu_nom,
             description: jeu.description,
             date: jeu.date_sortie ? jeu.date_sortie.toISOString().slice(0,10) : '',
-            genreId: jeu.genreId,
             editeurId: jeu.editeurId,
             misEnAvant: jeu.mis_en_avant
         };
@@ -114,7 +117,16 @@ app.get('/form', async (req, res) => {
 app.post('/modifier/:id', async (req, res) => {
     const jeuId = parseInt(req.params.id);
     try {
-        const { nom, description, date, genreId, editeurId, misEnAvant } = req.body;
+        const { nom, description, date, genreIds, editeurId, misEnAvant } = req.body;
+
+        // Normalize genreIds into an array of integers
+        let genreIdsArr = [];
+        if (Array.isArray(genreIds)) {
+            genreIdsArr = genreIds.map(id => parseInt(id)).filter(Number.isInteger);
+        } else if (typeof genreIds === 'string' && genreIds.length) {
+            const oneId = parseInt(genreIds);
+            if (!Number.isNaN(oneId)) genreIdsArr = [oneId];
+        }
 
         await prisma.jeu.update({
             where: { Jeu_id: jeuId },
@@ -123,7 +135,10 @@ app.post('/modifier/:id', async (req, res) => {
                 description: description || '',
                 date_sortie: date ? new Date(date) : null,
                 mis_en_avant: misEnAvant ? true : false,
-                genreId: genreId ? parseInt(genreId) : undefined,
+                // Replace current genre relations with the submitted ones
+                genres: {
+                    set: genreIdsArr.map(id => ({ Genre_id: id }))
+                },
                 editeurId: editeurId ? parseInt(editeurId) : undefined
             }
         });
@@ -136,7 +151,16 @@ app.post('/modifier/:id', async (req, res) => {
 // créer un jeu - post
 app.post('/form', async (req, res) => {
     try {
-        const { nom, description, date, genreId, editeurId, misEnAvant } = req.body;
+        const { nom, description, date, genreIds, editeurId, misEnAvant } = req.body;
+
+        // Normalize genreIds into an array of integers
+        let genreIdsArr = [];
+        if (Array.isArray(genreIds)) {
+            genreIdsArr = genreIds.map(id => parseInt(id)).filter(Number.isInteger);
+        } else if (typeof genreIds === 'string' && genreIds.length) {
+            const oneId = parseInt(genreIds);
+            if (!Number.isNaN(oneId)) genreIdsArr = [oneId];
+        }
 
         await prisma.jeu.create({
             data: {
@@ -144,7 +168,7 @@ app.post('/form', async (req, res) => {
                 description: description || '',
                 date_sortie: date ? new Date(date) : null,
                 mis_en_avant: misEnAvant ? true : false,
-                genreId: genreId ? parseInt(genreId) : undefined,
+                genres: genreIdsArr.length ? { connect: genreIdsArr.map(id => ({ Genre_id: id })) } : undefined,
                 editeurId: editeurId ? parseInt(editeurId) : undefined
             }
         });
