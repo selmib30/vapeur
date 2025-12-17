@@ -16,11 +16,11 @@ Environnent à configurée pour lancer le projet:
 8) npm run start
 
 Index principal :Clément
-mise en place du serveur /initialisation du serveur : Selim
-BDD/architecture du projet : selim, Matthieu
-Gestions Editeurs / Jeux / genre : selim, Matthieu, Alizée
-design css : selim / clément
-squelette du projet layout : clément
+-mise en place du serveur /initialisation du serveur : Selim
+-BDD/architecture du projet : selim, Matthieu
+-Gestions Editeurs / Jeux / genre : selim, Matthieu, Alizée
+-design css : selim / clément
+-squelette du projet layout : clément
 
 
 
