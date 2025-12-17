@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 
 <h1>Jeux mis en avant</h1>
 
@@ -15,40 +14,3 @@
 {{else}}
   <p>Aucun jeu mis en avant pour le moment.</p>
 {{/if}}
-=======
-<h1>{{title}}</h1>
-<p>Voici la liste complète de tous les jeux enregistrés.</p>
-
-
-<table border="1">
-    <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Description</th>
-            <th>Genre</th>
-            <th>Éditeur</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#each jeux}}
-            <tr>
-                <td>{{this.nom}}</td>
-                <td>{{this.description}}</td>
-                <td>{{this.Genre.nom}}</td>
-                <td>{{this.Editeur.nom}}</td>
-            </tr>
-        {{else}}
-            <tr>
-                <td colspan="4" style="color: blue;">
-                    Aucun jeu enregistré pour le moment.
-                </td>
-            </tr>
-        {{/each}}
-    </tbody>
-</table>
-
-
-<br>
-<a href="/">Retour à l'accueil</a>
-
->>>>>>> Stashed changes

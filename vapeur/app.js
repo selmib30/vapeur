@@ -7,8 +7,6 @@ const hbs = require("hbs");
 const { seedGenres } = require('./GenreSeeder');
 const jeuxRouter = require('./controllers/gestionsJeu');
 const editeursRouter = require('./controllers/editeurs');
-const indexRouter = require('./routes/index');
-const jeuxRouter = require('./routes/jeux'); 
 const app = express();
 const port = 8000;
 
@@ -22,17 +20,9 @@ app.use('/editeurs', editeursRouter);
 
 
 
-
 hbs.registerHelper("formatDate", (date) => {
     return date.toLocaleDateString();
 });
-
-// --- 2. BRANCHEMENT DES ROUTES ---
-app.use('/', indexRouter);      // Gère la page d'accueil (Jeux mis en avant)
-app.use('/jeux', jeuxRouter);   // Gère la liste des jeux (/jeux)
-
-const jeuxRouter = require('./controllers/gestionsJeu');
-app.use('/jeux', jeuxRouter);
 
 (async () => {
   await seedGenres(prisma);

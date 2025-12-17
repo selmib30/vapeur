@@ -3,39 +3,24 @@
 <h1>{{title}}</h1>
 
 
-<<<<<<< Updated upstream
 <form method="post" action="{{#if jeu}}/jeux/modifier/{{jeu.Jeu_id}}{{else}}/jeux/form{{/if}}">
     <div>
         <label>Nom:<br>
             <input type="text" name="nom" required value="{{#if jeu}}{{jeu.nom}}{{/if}}" />
-=======
-<form method="post" action="/jeux">
-    <div>
-        <label>Nom:<br>
-            <input type="text" name="nom" required />
->>>>>>> Stashed changes
         </label>
     </div>
 
 
     <div>
         <label>Description:<br>
-<<<<<<< Updated upstream
             <textarea name="description" rows="4" cols="50">{{#if jeu}}{{jeu.description}}{{/if}}</textarea>
-=======
-            <textarea name="description" rows="4" cols="50"></textarea>
->>>>>>> Stashed changes
         </label>
     </div>
 
 
     <div>
         <label>Date de sortie:<br>
-<<<<<<< Updated upstream
             <input type="date" name="date" value="{{#if jeu}}{{jeu.date}}{{/if}}" />
-=======
-            <input type="date" name="date" />
->>>>>>> Stashed changes
         </label>
     </div>
 
@@ -43,14 +28,9 @@
     <div>
         <label>Genre:<br>
             <select name="genreId" required>
-<<<<<<< Updated upstream
                 <option value="">-- Choisir --</option>
                 {{#each genres}}
                     <option value="{{this.id}}" {{#if this.selected}}selected{{/if}}>{{this.nom}}</option>
-=======
-                {{#each genres}}
-                    <option value="{{this.id}}">{{this.nom}}</option>
->>>>>>> Stashed changes
                 {{/each}}
             </select>
         </label>
@@ -60,14 +40,9 @@
     <div>
         <label>Éditeur:<br>
             <select name="editeurId" required>
-<<<<<<< Updated upstream
                 <option value="">-- Choisir --</option>
                 {{#each editeurs}}
                     <option value="{{this.id}}" {{#if this.selected}}selected{{/if}}>{{this.nom}}</option>
-=======
-                {{#each editeurs}}
-                    <option value="{{this.id}}">{{this.nom}}</option>
->>>>>>> Stashed changes
                 {{/each}}
             </select>
         </label>
@@ -76,21 +51,13 @@
 
     <div>
         <label>
-<<<<<<< Updated upstream
             <input type="checkbox" name="misEnAvant" {{#if jeu}}{{#if jeu.misEnAvant}}checked{{/if}}{{/if}} /> Mis en avant
-=======
-            <input type="checkbox" name="misEnAvant" /> Mis en avant
->>>>>>> Stashed changes
         </label>
     </div>
 
 
     <div>
-<<<<<<< Updated upstream
         <button type="submit">{{#if jeu}}Enregistrer les modifications{{else}}Ajouter le jeu{{/if}}</button>
-=======
-        <button type="submit">Ajouter le jeu</button>
->>>>>>> Stashed changes
         <a href="/jeux">Annuler</a>
     </div>
 </form>
