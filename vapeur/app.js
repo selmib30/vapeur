@@ -8,7 +8,7 @@ const hbs = require("hbs");
 const app = express();
 const port = 8000;
 
-// Configuration Handlebars (UNE SEULE FOIS)
+// Configuration Handlebars 
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 hbs.registerPartials(path.join(__dirname, "views", "partials"));
