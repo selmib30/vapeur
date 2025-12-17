@@ -5,17 +5,10 @@
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-
-
-  
-
-
     "seed:genres": "node genreSeeder.js",
     "dev": "nodemon app.js",
     "start": "node server.js",
     "editeur": "node editeurs.js"
- 
-  
   },
   "author": "",
   "license": "ISC",

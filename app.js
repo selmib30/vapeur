@@ -19,11 +19,12 @@ app.use('/jeux', jeuxRouter);
 app.use('/editeurs', editeursRouter);
 
 
-
+// Helper pour formater les dates dans les templates hbs
 hbs.registerHelper("formatDate", (date) => {
     return date.toLocaleDateString();
 });
 
+// Démarrage du serveur après le seed des genres
 (async () => {
   await seedGenres(prisma);
   
@@ -32,8 +33,9 @@ hbs.registerHelper("formatDate", (date) => {
   });
 })();
 
+// route / je redirect to /index
 app.get('/', (req, res) => {
-    //pour le moment editeurs est la page d'accueil
+    
     res.redirect('/index');
 });
 
