@@ -1,0 +1,18 @@
+<div class="container">
+	<h1>Genre: {{genre.Genre_nom}}</h1>
+
+	{{#if jeux.length}}
+		<h2>Jeux associés</h2>
+		<ul>
+			{{#each jeux}}
+				<li>
+					<a href="/jeux/{{this.Jeu_id}}">{{this.Jeu_nom}}</a>
+				</li>
+			{{/each}}
+		</ul>
+	{{else}}
+		<p>Aucun jeu pour ce genre.</p>
+	{{/if}}
+
+	<p><a href="/genres">← Retour à la liste des genres</a></p>
+</div>

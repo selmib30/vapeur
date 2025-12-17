@@ -1,14 +1,10 @@
 const defaultGenres = [
   'Action',
   'Aventure',
-  'Comédie',
-  'Drame',
-  'Fantasy',
   'Horreur',
+  'FPS',
+  'Fantasy',
   'Romance',
-  'Science-Fiction',
-  'Thriller',
-  'Animation',
 ];
 
 async function seedGenres(prisma) {
@@ -21,7 +17,7 @@ async function seedGenres(prisma) {
     }
 
     await prisma.genre.createMany({
-      data: defaultGenres.map(name => ({ nom: name })),
+      data: defaultGenres.map(name => ({ Genre_nom: name })),
     });
 
     console.log('Genres ajoutés avec succès.');
