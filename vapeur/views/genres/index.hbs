@@ -1,0 +1,15 @@
+<div class="container">
+    <h1>Liste des Genres</h1>
+    
+    {{#if genres}}
+        <ul class="genres-list">
+            {{#each genres}}
+                <li>
+                    <a href="/genres/{{this.Genre_id}}">{{this.Genre_nom}}</a>
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>Aucun genre disponible.</p>
+    {{/if}}
+</div>
