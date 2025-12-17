@@ -15,6 +15,7 @@ Environnent à configurée pour lancer le projet:
 7) npx prisma generate
 8) npm run start
 
+Répartition des taches : 
 1. Index principal :Clément
 2. mise en place du serveur /initialisation du serveur : Selim
 3. BDD/architecture du projet : selim, Matthieu
