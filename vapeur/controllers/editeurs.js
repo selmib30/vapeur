@@ -35,8 +35,6 @@ async function listeEditeurs(req, res) {
         });
         res.render("editeurs/liste", {
             editeurs: editeurs,
-            titre: "Liste des Éditeurs",
-            erreur: req.query.erreur 
         });
     }
     catch (error) {
@@ -74,7 +72,7 @@ async function getEditeurById(req, res) {
 
 async function getCreateEditeur(req, res) { 
     res.render("editeurs/formulaire", { 
-        titre: "Créer un nouvel éditeur",
+        titre: "Creation d'un nouvel éditeur.",
         action: "/editeurs/creation", 
         editeur: { Editeur_nom: '' } 
     });
@@ -92,13 +90,9 @@ async function postCreateEditeur(req, res) {
     } catch (error) {
         console.error("Erreur lors de la création de l'éditeur:", error);
         
-        let messageErreur = "Erreur lors de la création de l'éditeur. Veuillez vérifier les données.";
-
         res.render("editeurs/formulaire", {
-            titre: "Créer un nouvel éditeur",
             action: "/editeurs/creation",
             editeur: { Editeur_nom: nom }, 
-            erreur: messageErreur
         });
     }
 }
@@ -140,15 +134,11 @@ async function postEditEditeur(req, res) {
         res.redirect("/editeurs");
     } catch (error) {
         console.error("Erreur lors de la modification de l'éditeur:", error);
-        
-        let messageErreur = "Erreur lors de la modification de l'éditeur. Le nom existe peut-être déjà.";
-        
+                
         res.render("editeurs/formulaire", {
-            // Repasse les données modifiées pour ne pas perdre la saisie
             editeur: { Editeur_id: editeurId, Editeur_nom: nom }, 
-            titre: `Modifier l'éditeur`,
+            titre: `Modifier l'éditeur ${editeur.Editeur_nom}`,
             action: `/editeurs/${editeurId}/modification`,
-            erreur: messageErreur
         });
     }
 }
@@ -156,6 +146,8 @@ async function postEditEditeur(req, res) {
 //POST /editeurs/:id/suppression - Traite la suppression de l'éditeur
 async function postDeleteEditeur(req, res) { 
     const editeurId = parseInt(req.params.id);
+    
+    
     try {
         await prisma.editeur.delete({
             where: { Editeur_id: editeurId } 
@@ -164,7 +156,6 @@ async function postDeleteEditeur(req, res) {
     }
     catch (error) {
         console.error("Erreur lors de la suppression de l'éditeur:", error);
-        // CORRECTION : Gestion de l'erreur, notamment les erreurs de contrainte (éditeur lié à des jeux)
         let messageErreur = "Erreur lors de la suppression. Il est probable que cet éditeur soit encore lié à un ou plusieurs jeux.";
         res.redirect(`/editeurs?erreur=${encodeURIComponent(messageErreur)}`);
     }
