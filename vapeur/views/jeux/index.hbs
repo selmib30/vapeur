@@ -1,0 +1,47 @@
+<h1>{{title}}</h1>
+<p>Voici la liste complète de tous les jeux enregistrés.</p>
+
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Genre</th>
+            <th>Éditeur</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each jeux}}
+            <tr>
+                <td>{{this.nom}}</td>
+                <td>{{this.description}}</td>
+                <td>{{this.Genre.nom}}</td>
+                <td>{{this.Editeur.nom}}</td>
+                <td>
+                    <a href="/jeux/modifier/{{this.Jeu_id}}" style="margin-right:6px;">
+                        <button type="button">Modifier</button>
+                    </a>
+                    <form method="POST" action="/jeux/supprimer/{{this.Jeu_id}}" onsubmit="return confirm('Confirmer la suppression ?');" style="display:inline">
+                        <button type="submit">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        {{else}}
+            <tr>
+                <td colspan="5" style="color: blue;">
+                    Aucun jeu enregistré pour le moment.
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+
+<br>
+<br>
+<a href="/jeux/form"><button>Ajouter un jeu</button></a>
+
+<a href="/">Retour à l'accueil</a>
+
