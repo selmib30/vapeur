@@ -4,7 +4,8 @@
   "description": "",
   "main": "script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed:genres": "node genreSeeder.js"
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +13,7 @@
     "@prisma/client": "^6.19.0",
     "express": "^5.2.1",
     "hbs": "^4.2.0",
+    "node.js": "^0.0.1-security",
     "prisma": "6.19.0"
   }
 }

@@ -3,4 +3,3 @@ node_modules
 .env
 *.db
 node_modules
-/generated/prisma
